@@ -24,10 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.micuadricula.data.DataSource
 import com.example.micuadricula.model.Topic
 import com.example.micuadricula.ui.theme.MiCuadriculaTheme
@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TopicCard(Topic(R.string.architecture, 58, R.drawable.architecture))
+                    TopicsApp()
                 }
             }
         }
@@ -64,13 +64,17 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
                 painter = painterResource(id = topic.imageResourceId),
                 contentDescription = stringResource(id = topic.stringResourceId),
                 modifier = Modifier
-                    .height(68.dp)
-                    .width(68.dp),
+                    .height(dimensionResource(id = R.dimen.padding_huge))
+                    .width(dimensionResource(id = R.dimen.padding_huge)),
                 contentScale = ContentScale.Crop
             )
             Column(
                 modifier = Modifier
-                    .padding(top = 16.dp, end = 16.dp, start = 16.dp)
+                    .padding(
+                        top = dimensionResource(id = R.dimen.padding_medium),
+                        end = dimensionResource(id = R.dimen.padding_medium),
+                        start = dimensionResource(id = R.dimen.padding_medium)
+                    )
             ) {
                 Text(
                     text = stringResource(id = topic.stringResourceId),
@@ -78,7 +82,7 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_grain),
@@ -86,7 +90,7 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
                     )
                     Text(
                         text = topic.points.toString(),
-                        modifier = Modifier.padding(start = 8.dp),
+                        modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_small)),
                         style = MaterialTheme.typography.labelMedium
                     )
                 }
@@ -98,11 +102,12 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
 @Composable
 fun TopicList(topicList: List<Topic>, modifier: Modifier = Modifier) {
     LazyVerticalGrid(
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_small)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
         columns = GridCells.Fixed(2),
-        modifier = modifier) {
+        modifier = modifier
+    ) {
         items(topicList) {topic ->
             TopicCard(
                 topic = topic
